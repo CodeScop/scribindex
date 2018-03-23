@@ -1,0 +1,45 @@
+<%= form_with(model: character, local: true) do |form| %>
+  <% if character.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(character.errors.count, "error") %> prohibited this character from being saved:</h2>
+
+      <ul>
+      <% character.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.text_field :nym, id: :character_nym, placeholder: "What you're calling them", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.text_field :fullname, id: :character_fullname, placeholder: "Full name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.number_field :birthyear, id: :character_birthyear, placeholder: "Birth year", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :details %>
+    <%= form.cktext_area :details, id: :character_details %>
+  </div>
+
+  <% if current_project %>
+    <div class="form-group">
+      <%= form.hidden_field :project_id, id: :character_project_id, value: current_project.id %>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <%= form.label "Project" %><br />
+      <%= form.select :project_id, @projects.collect { |p| [ p.title, p.id]}, {include_blank: "Select Project"} %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit "Save Character", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<% if current_story %>
+<h1><%= current_project.title %> Scenes</h1>
+<div class="row">
+  <div class="col-md-9 col-md-offset-1">
+    <table class="table table-hover">
+
+      <tbody class="sortable">
+        <% @scenes.each_with_sortable_id do |scene, sortable_id| %>
+          <tr id="<%= sortable_id %>">
+            <td><%= scene.position + 1 %></td>
+            <td><%= link_to scene.title, scene %></td>
+            <td><%= (raw scene.content.truncate(100)) %></td>
+            <td><%= link_to 'x', scene, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<%= link_to 'New Scene', new_scene_path %>
+
+<% else %>
+
+  <div class="jumbotron">
+    <h1>Unauthorized</h1>
+    <h3 class="lead">Sorry, you somehow navigated here without going through a project. You have to click to this page through a project's page to make sure you're only looking at scenes from the current project. Go back to your project's page and try again.</h3>
+  </div>
+  <%= link_to "My Projects", root_path %>
+
+<% end %>

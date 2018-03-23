@@ -1,0 +1,37 @@
+<%= link_to 'New Group', new_group_path %>
+<p id="notice"><%= notice %></p>
+<% if current_project %>
+  <h1><%= current_project.title %> Groups</h1>
+<%else %>
+  <h1>All Groups</h1>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <% if !current_project %>
+        <th>Project</th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td><%= link_to group.title, group %></td>
+        <td><%= (raw group.description.truncate(200)) %></td>
+        <% if !current_project %>
+          <td><%= link_to group.project.title, project_path(id: group.project.id) %></td>
+        <% end %>
+        <td>
+          <%= link_to 'Edit Group Info', edit_group_path(group), class: "btn btn-sm btn-info" %>
+          <%= link_to 'Delete Group', group, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-warning" %>
+        </td>
+      </tr>
+    <% end %>
+    <tr><td><%= link_to 'Create New Group', new_group_path, class: "btn btn-primary" %></td></tr>
+  </tbody>
+</table>

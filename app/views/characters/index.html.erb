@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+<% if current_project %>
+  <h1><%= current_project.title %> Characters</h1>
+<%else %>
+  <h1>All Characters</h1>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Best Known As</th>
+      <th>Full Name</th>
+      <th>Birth Year</th>
+      <% if !current_project %>
+        <th>Project</th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @characters.each do |character| %>
+      <tr>
+        <td><%= link_to character.nym, character %></td>
+        <td><%= link_to character.fullname, character %></td>
+        <td><%= character.birthyear %></td>
+        <% if !current_project %>
+          <td><%= link_to character.project.title, project_path(id: character.project.id) %></td>
+        <% end %>
+        <td>
+          <%= link_to 'Edit Character', edit_character_path(character), class: "btn btn-sm btn-info" %>
+          <%= link_to 'Delete Character', character, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-warning" %>
+        </td>
+      </tr>
+    <% end %>
+    <tr><td><%= link_to 'Create New Character', new_character_path, class: "btn btn-primary" %></td></tr>
+  </tbody>
+</table>

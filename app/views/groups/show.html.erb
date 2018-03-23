@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h2 class="text-center"><%= @group.title %></h2>
+<div class="row">
+	<div class="col-sm-9">
+		<h3 class="lead"><%= raw @group.description %></h3>
+		<% if current_project != @group.project %>
+			<h3 class="lead small">(From the <%= link_to @group.project.title, project_path(id: @group.project_id) %> project)</h3>
+		<% end %>
+	</div>
+	<div class="col-sm-3">
+		<%= link_to 'Edit Info', edit_group_path(@group), class: "btn btn-block btn-info" %>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-5">
+		<h3 class="text-center">Members</h3>
+		<dl class="dl-horizontal">
+			<% @group.memberships.each do |m| %>
+				<dt><%= link_to m.character.nym, character_path(m.character) %></dt>
+				<dd>Role: <%= m.role%></dd>
+			<% end %>
+		</dl>
+		<div class="well">
+      <h4>Add More Members:</h4>
+      <%= form_with url: groupmem_path do |form| %>
+        <div class="form-group">
+         <%= form.select :character_id, @other_chars.collect { |c| [ c.nym, c.id]}, {include_blank: "Character Name"}, class: "form-control" %>
+         <%= form.hidden_field :group_id, value: @group.id %>
+        </div>
+        <div class="form-group">
+         <%= form.text_field :role, placeholder: "Role in group", class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= form.submit "Make New Membership", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+	</div>
+	<div class="col-sm-7">
+		<h3 class="text-center">Notes</h3>
+		<%= render "note/notes" %>
+		<h4 class="text-center">New Note:</h4>
+		<%= render "note/form" %>
+	</div>
+</div>
+

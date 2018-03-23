@@ -1,0 +1,89 @@
+<p id="notice"><%= notice %></p>
+
+<div class="jumbotron">
+	<h1><%= @project.title %></h1>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+				<%= link_to 'Edit Project Name, Description', edit_project_path(@project), class: "btn btn-block btn-info" %>
+	</div>
+</div>
+<br>
+<div class="row">
+	<!-- Menu Options -->
+	<div class="col-sm-4 col-md-3">
+		<h3>Description</h3>
+		<div class="well">
+			<%= raw @project.description %>
+		</div>
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		  <div class="panel panel-primary">
+		    <div class="panel-heading" role="tab" id="headingOne">
+		      <h4 class="panel-title text-center">
+		        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+		          Scenes
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+		      <div class="list-group">
+		        <%= link_to "Scenes Page", scenes_path, class: "list-group-item active text-center" %>
+		        <% @scenes.each do |scene| %>
+		        	<%= link_to scene.title, scene_path, class: "list-group-item" %>
+		        <% end %>
+
+		      </div>
+		    </div>
+		  </div>
+		  <div class="panel panel-primary">
+		    <div class="panel-heading" role="tab" id="headingTwo">
+		      <h4 class="panel-title text-center">
+		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		          Characters
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+		      <div class="list-group">
+		        <%= link_to "Characters Page", characters_path, class: "list-group-item active text-center" %>
+		        <% @characters.each do |character| %>
+		        	<%= link_to character.nym, character_path, class: "list-group-item" %>
+		        <% end %>
+
+		      </div>
+		    </div>
+		  </div>
+		  <div class="panel panel-primary">
+		    <div class="panel-heading" role="tab" id="headingThree">
+		      <h4 class="panel-title text-center">
+		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+		          Groups
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+		      <div class="list-group">
+		        <%= link_to "Groups Page", groups_path, class: "list-group-item active text-center" %>
+		        <% @groups.each do |group| %>
+		        	<%= link_to group.title, group_path, class: "list-group-item" %>
+		        <% end %>
+
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+	</div>
+
+	<!--Notes -->
+	<div class="col-sm-8 col-md-9">
+		<h2 class="text-center">Notes</h2>
+		<%= render "note/notes" %>
+		<h4 class="text-center">New Note:</h4>
+		<%= render "note/form" %>
+
+	</div>
+
+</div>
+

@@ -1,0 +1,35 @@
+<%= form_with(model: scene, local: true) do |form| %>
+  <% if scene.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(scene.errors.count, "error") %> prohibited this scene from being saved:</h2>
+
+      <ul>
+      <% scene.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.text_field :title, id: :scene_title, placeholder: "Title", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :content %>
+    <%= form.cktext_area :content, id: :scene_content %>
+  </div>
+
+  <div class="form-group">
+    <%= form.hidden_field :story_id, id: :scene_story_id, value: current_story.id %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :position %>
+    <%= form.number_field :position, id: :scene_position %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Save Scene", class: "btn btn-primary" %>
+  </div>
+<% end %>

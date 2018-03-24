@@ -6,7 +6,7 @@ class ScenesController < ApplicationController
   def index
     if current_story
         @scenes = Scene.where(story_id: current_story.id).order(:position)
-        if @scenes? && @scenes.first.position != 0
+        if @scenes.length > 0 && @scenes.first.position != 0
           @scenes.each_with_index do |scene, index|
             scene.update(position: index)
           end

@@ -32,7 +32,12 @@ class ScenesController < ApplicationController
   # GET /scenes/new
   def new
     @scene = Scene.new
-    @scene.position = Scene.order(:position).last.position + 1
+    pile = Scene.where(story_id: current_story.id)
+    if pile.length > 0
+      @scene.position = Scene.order(:position).last.position + 1
+    else
+      @scene.position = 0
+    end
   end
 
   # GET /scenes/1/edit

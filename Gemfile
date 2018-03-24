@@ -38,7 +38,7 @@ gem 'ckeditor'
 gem 'carrierwave'
 gem 'mini_magick'
 
-gem 'sanitize'
+gem 'sanitize' ~> 4.6.3
 
 gem 'jquery-ui-rails'
 gem 'rails_sortable'

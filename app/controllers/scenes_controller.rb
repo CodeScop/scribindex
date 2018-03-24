@@ -4,9 +4,9 @@ class ScenesController < ApplicationController
   # GET /scenes
   # GET /scenes.json
   def index
-    if current_story && Scene.where(story_id: current_story.id)?
+    if current_story
         @scenes = Scene.where(story_id: current_story.id).order(:position)
-        if @scenes.first.position != 0
+        if @scenes? && @scenes.first.position != 0
           @scenes.each_with_index do |scene, index|
             scene.update(position: index)
           end

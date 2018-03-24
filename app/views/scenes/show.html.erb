@@ -1,34 +1,53 @@
 <p id="notice"><%= notice %></p>
-<div class="jumbotron">
-<h1><%= @scene.story.project.title %></h1>
-<h2 class="lead">Scene <%= @scene.position %>: <%= @scene.title %></h2>
+
+<div class="jumbotron mini">
+	<div class="row">
+		<div class="col-sm-8 col-md-9">
+			<h2>Scene <%= @scene.position + 1 %>: <%= @scene.title %></h2>
+			<h3 class="lead">Scene: The <%= @scene.story.project.title %> Project</h3>
+		</div>
+		<div class="col-sm-4 col-md-3">
+			<%= link_to 'All Scenes', scenes_path, class: "btn btn-default btn-lg btn-block" %>
+			<%= link_to 'New Scene', new_scene_path, class: "btn btn-success btn-sm btn-block" %>
+			<%= link_to 'Edit Scene', edit_scene_path(@scene), class: "btn btn-info btn-sm btn-block" %>
+			<%= link_to 'Delete Scene', @scene, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm btn-block" %>
+		</div>
+	</div>
 </div>
-
-
-<div class="well">
-  <%= raw @scene.content %>
-</div>
-
 
 <div class="row">
 	<div class="col-xs-4 col-sm-3">
-		<%= link_to 'Edit', edit_scene_path(@scene), class: "btn btn-info" %>
+
 		<ul class="nav nav-pills">
+			<% if !current_project %>
+				<li role="presentation"><h4><%= link_to "#{@scene.story.project.title} Project Page", project_path(id: @scene.story.project_id), class: "btn btn-lg btn-primary btn-block" %></h4></li>
+			<% end %>
 			<li role="presentation">
 				<% if @previous %>
-					<%= link_to "< #{@previous.title}", scene_path(@previous) %>
+					<%= link_to scene_path(@previous) do %>
+						<span class="glyphicon glyphicon-chevron-left " aria-hidden="true"></span>
+						<%= @previous.title %>
+					<% end %>
 				<% end %>
 			</li>
 			<li role="presentation">
 				<% if @next %>
-					<%= link_to "#{@next.title} >", scene_path(@next) %>
+					<%= link_to scene_path(@next) do %>
+						<%= @next.title %>
+						<span class="glyphicon glyphicon-chevron-right " aria-hidden="true"></span>
+					<% end %>
 				<% end %>
 			</li>
 		</ul>
+
 	</div>
 
 	<div class="col-xs-8 col-sm-9">
-		<h2 class="text-center">Notes</h2>
+		<div class="well">
+			<h3><%= @scene.title %></h3>
+		  <%= raw @scene.content %>
+		</div>
+		<h3 class="text-center">Notes</h3>
 		<%= render "note/notes" %>
 		<h4 class="text-center">New Note:</h4>
 		<%= render "note/form" %>

@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
     if current_project
       @groups = current_project.groups
     else
-      @groups = Group.all
+      @groups = current_user.groups
     end
   end
 

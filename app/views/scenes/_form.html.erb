@@ -25,8 +25,7 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :position %>
-    <%= form.number_field :position, id: :scene_position %>
+    <%= form.hidden_field :position, id: :scene_position, value: scene.position %>
   </div>
 
   <div class="actions">

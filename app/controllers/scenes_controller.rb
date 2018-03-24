@@ -4,15 +4,21 @@ class ScenesController < ApplicationController
   # GET /scenes
   # GET /scenes.json
   def index
-    if current_story  
-      @scenes = Scene.where(story_id: current_story.id).order(:position)
+    if current_story
+        @scenes = Scene.where(story_id: current_story.id).order(:position)
+        if @scenes.first.position != 0
+          @scenes.each_with_index do |scene, index|
+            scene.update(position: index)
+          end
+          redirect_to scenes_path
+        end
     end
   end
 
   # GET /scenes/1
   # GET /scenes/1.json
   def show
-    if @scene.position > 1
+    if @scene.position > 0
       @previous = Scene.find_by(story_id: @scene.story_id, position: (@scene.position - 1))
     end
     if @scene.position < @scene.story.scenes.length
@@ -26,6 +32,7 @@ class ScenesController < ApplicationController
   # GET /scenes/new
   def new
     @scene = Scene.new
+    @scene.position = Scene.order(:position).last.position + 1
   end
 
   # GET /scenes/1/edit

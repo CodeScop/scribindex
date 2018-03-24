@@ -1,4 +1,8 @@
-<nav class="navbar navbar-default">
+<% if current_project %>
+  <nav class="navbar navbar-inverse">
+<%else %>
+  <nav class="navbar navbar-default">
+<% end %>
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -8,7 +12,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to "Dashboard", root_path, class: "navbar-brand" %>
+      <% if current_project %>
+        <%= link_to current_project.title, current_project, class: "navbar-brand" %>
+      <% elsif user_signed_in? %>
+        <%= link_to "All Projects", root_path, class: "navbar-brand" %>
+      <% end %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -17,36 +25,35 @@
 
         <!-- if there's a current project -->
         <% if current_project %>
-          <li><%= link_to current_project.title, current_project %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Scenes <span class="caret"></span></a>
             <ul class="dropdown-menu">
+              <li><h5 class="text-center"><%= link_to "All Scenes", scenes_path %></h5></li>
               <% current_story.scenes.each do |scene| %>
                 <li><%= link_to scene.title, scene %></li>
               <% end %>
-              <li><%= link_to "All Scenes", scenes_path %></li>
             </ul>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Characters <span class="caret"></span></a>
             <ul class="dropdown-menu">
+              <li><h5 class="text-center"><%= link_to "All Characters", characters_path %></h5></li>
               <% current_project.characters.each do |char| %>
                 <li><%= link_to char.nym, char %></li>
               <% end %>
-              <li ><%= link_to "All Characters", characters_path %></li>
             </ul>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Groups <span class="caret"></span></a>
             <ul class="dropdown-menu">
+              <li><h5 class="text-center"><%= link_to "All Groups", groups_path %></h5></li>
               <% current_project.groups.each do |group| %>
                 <li><%= link_to group.title, group %></li>
               <% end %>
-              <li><%= link_to "All Groups", groups_path %></li>
             </ul>
           </li>
         <!-- otherwise -->
-        <% else %>
+        <% elsif user_signed_in? %>
           <li ><%= link_to "All Characters", characters_path %></li>
           <li><%= link_to "All Groups", groups_path %></li>
         <% end %>
@@ -55,10 +62,11 @@
       <!-- On the right, user stuff -->
       <ul class="nav navbar-nav navbar-right">
         <% if current_project %>
-          <li><%= link_to 'Delete Current Project', current_project, method: :delete, data: { confirm: 'WARNING: Project cannot be recovered. Are you sure?' }, class: "btn btn-block btn-warning" %></li>
+          <li><%= link_to 'Leave Current Project', root_path, class: "btn btn-block btn-default" %></li>
+        <% elsif user_signed_in? %>
+          <li><%= link_to 'Create New Project', new_project_path, class: "btn btn-success" %></li>
         <% end %>
         <% if user_signed_in? %>
-          <li><%= link_to 'New Project', new_project_path %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.username%> <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -67,7 +75,7 @@
             </ul>
           </li>
         <% else %>
-          <li><%= link_to "Sign up", new_registration_path(resource_name) %></li>
+          <li><%= link_to "Sign up", new_registration_path(resource_name), class: "btn btn-primary" %></li>
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->

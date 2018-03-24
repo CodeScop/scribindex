@@ -1,22 +1,24 @@
 <p id="notice"><%= notice %></p>
 
 <div class="jumbotron">
-  <h2><%= current_user.username %>'s Projects</h2>
+  <h1><%= current_user.username %>'s Projects</h1>
 </div>
 
 <div class="row">
   <% @projects.each do |project| %>
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="panel panel-primary">
         <%= link_to project do %>
         <div class="panel-heading bg-primary">
-          <div class="panel-title text-center">
-            <%= project.title %>
-          </div>
+          <h2 class="text-center"><%= project.title %></h2>
         </div>
         <% end %>
-        <div class="panel-body">
-          <%= (raw project.description.truncate(200)) %>
+        <div class="panel-body project-panel">
+          <%= project.description.html_safe.truncate(200) %>
+        </div>
+        <div class="panel-footer btn-group btn-group-justified">
+          <%= link_to 'Edit Project', edit_project_path(project), class: "btn btn-info btn-block" %>
+          <%= link_to 'Delete Project', project, method: :delete, data: { confirm: 'WARNING: Project cannot be recovered. Are you sure?' }, class: "btn btn-block btn-danger" %>
         </div>
       </div>
     </div>

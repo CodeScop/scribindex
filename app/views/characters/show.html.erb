@@ -1,29 +1,51 @@
 <p id="notice"><%= notice %></p>
 
-<h2 class="text-center"><%= @character.nym %></h2>
+<div class="jumbotron mini">
+  <div class="row">
+    <div class="col-sm-8 col-md-9">
+      <h2><%= @character.nym %></h2>
+      <h3 class="lead">Character: The <%= @character.project.title %> Project</h3>
+    </div>
+    <div class="col-sm-4 col-md-3">
+      <%= link_to 'More Characters', characters_path, class: "btn btn-default btn-lg btn-block" %>
+      <% if current_project %>
+        <%= link_to 'New Character', new_character_path, class: "btn btn-success btn-sm btn-block" %>
+      <% end %>
+      <%= link_to 'Edit Character', edit_character_path(@character), class: "btn btn-info btn-sm btn-block" %>
+      <%= link_to 'Delete Character', @character, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm btn-block" %>
+    </div>
+  </div>
+</div>
 
 <div class="row">
-  <div class="col-xs-12">
-    <%= link_to 'Edit', edit_character_path(@character),class: "btn btn-block btn-info" %>
-  </div>
   <div class="col-sm-4 col-md-3">
     <h3>Quick Facts:</h3>
     <div class="monoinfo">
       <dl>
-        <dt>Project</dt>
-        <dd><%= link_to @character.project.title, project_path(id: @character.project_id) %></dd>
+        <% if !current_project %>
+          <dt><h4>Project</h4></dt>
+          <dd><h4><%= link_to @character.project.title, project_path(id: @character.project_id) %></h4></dd>
+        <% end %>
         <dt>Full Name</dt>
         <dd> <%= @character.fullname %></dd>
         <dt>Born</dt>
         <dd><%= @character.birthyear %></dd>
         <dt>Group Memberships</dt>
-        <% @character.memberships.each do |m| %>
-          <dd><%= link_to m.group.title, m.group %> as <%= m.role %></dd>
+        <% if @character.memberships.length > 0 %>
+          <% @character.memberships.each do |m| %>
+            <% if m.role? %>
+              <dd><%= link_to m.group.title, m.group %> as <%= m.role %></dd>
+            <% else %>
+              <dd><%= link_to m.group.title, m.group %></dd>
+            <% end %>
+          <% end %>
+        <% else %>
+          <dd class="text-muted small">No groups yet! Add one?</dd>
         <% end %>
       </dl>
     </div>
     <div class="well">
-      <h3>Add More Groups:</h3>
+      <h4>Add More Groups:</h4>
       <%= form_with url: charmem_path do |form| %>
         <div class="form-group">
          <%= form.select :group_id, @other_groups.collect { |g| [ g.title, g.id]}, {include_blank: "Group Name"}, class: "form-control" %>
@@ -33,19 +55,18 @@
          <%= form.text_field :role, placeholder: "Role in group", class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= form.submit "Make New Membership", class: "btn btn-primary" %>
+          <%= form.submit "Join Character to Group", class: "btn btn-primary btn-block" %>
         </div>
       <% end %>
+      <%= link_to "I need a new group for this...", new_group_path, class: "btn btn-success btn-block" %>
     </div>
   </div>
   <div class="col-sm-8 col-md-9">
     <h3>The Details:</h3>
-    <%= raw @character.details %>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <h2 class="text-center">Notes</h2>
+    <div class="well">
+      <%= raw @character.details %>
+    </div>
+    <h3 class="text-center">Notes</h3>
     <%= render "note/notes" %>
     <h4 class="text-center">New Note:</h4>
     <%= render "note/form" %>

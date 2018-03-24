@@ -1,20 +1,23 @@
 CKEDITOR.editorConfig = function(config) {
   config.language = 'en';
-  config.width = '700';
+  config.width = '100%';
   config.filebrowserBrowseUrl = "/ckeditor/attachment_files";
   config.filebrowserImageBrowseLinkUrl = "/ckeditor/pictures";
   config.filebrowserImageBrowseUrl = "/ckeditor/pictures";
   config.filebrowserImageUploadUrl = "/ckeditor/pictures";
   config.filebrowserUploadUrl = "/ckeditor/attachment_files";
 
+  config.toolbarCanCollapse = true;
   config.toolbar_Pure = [
     '/', {
       name: 'basicstyles',
       items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']
-    }, {
+    }, 
+    {
       name: 'paragraph',
       items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
-    }, {
+    }, 
+    {
       name: 'links',
       items: ['Link', 'Unlink']
     }, '/', {
@@ -29,5 +32,7 @@ CKEDITOR.editorConfig = function(config) {
     }
   ];
   config.toolbar = 'Pure';
+
   return true;
 };
+

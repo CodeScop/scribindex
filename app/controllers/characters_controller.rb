@@ -7,7 +7,7 @@ class CharactersController < ApplicationController
     if current_project
       @characters = current_project.characters
     else
-      @characters = Character.all
+      @characters = current_user.characters
     end
   end
 

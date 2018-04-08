@@ -1,3 +1,3 @@
-$(function() {
-  $('.sortable').railsSortable();
+$(document).on('turbolinks:load', function() {
+	$('.sortable').railsSortable();
 });

@@ -34,9 +34,9 @@
         <% if @character.memberships.length > 0 %>
           <% @character.memberships.each do |m| %>
             <% if m.role? %>
-              <dd><%= link_to m.group.title, m.group %> as <%= m.role %></dd>
+              <dd><%= link_to m.group.title, m.group %> as <%= m.role %> (<%= link_to 'Remove?', charmemx_path(id: m.id), method: :delete, data: { confirm: 'Are you sure?' } %>)</dd>
             <% else %>
-              <dd><%= link_to m.group.title, m.group %></dd>
+              <dd><%= link_to m.group.title, m.group %> (<%= link_to 'Remove?', charmemx_path(id: m.id), method: :delete, data: { confirm: 'Are you sure?' } %>)</dd>
             <% end %>
           <% end %>
         <% else %>

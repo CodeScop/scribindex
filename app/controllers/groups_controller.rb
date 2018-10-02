@@ -26,6 +26,13 @@ class GroupsController < ApplicationController
     redirect_to @group
   end
 
+  def memdelete
+    @membership = Membership.find(params[:id])
+    @group = @membership.group
+    @membership.delete
+    redirect_to @group
+  end
+
   # GET /groups/new
   def new
     @group = Group.new

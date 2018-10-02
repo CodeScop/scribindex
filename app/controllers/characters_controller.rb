@@ -26,6 +26,13 @@ class CharactersController < ApplicationController
     redirect_to @character
   end
 
+  def memdelete
+    @membership = Membership.find(params[:id])
+    @character = @membership.character
+    @membership.delete
+    redirect_to @character
+  end
+
   # GET /characters/new
   def new
     @character = Character.new

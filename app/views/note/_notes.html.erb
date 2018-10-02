@@ -4,15 +4,7 @@
 			<div class="panel-heading" role="tab" id="heading<%= note.id %>">
 				<h4 class="panel-title">
 					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= note.id %>" aria-expanded="false" aria-controls="collapse<%= note.id %>">
-						<% if @notable.class.to_s == "Project" %>
-							<%= link_to 'x', project_note_path(@notable, note) , method: :delete, data: { confirm: 'Are you sure?' }, class: "pull-right" %>
-						<% elsif @notable.class.to_s == "Character" %>
-							<%= link_to 'x', character_note_path(@notable, note) , method: :delete, data: { confirm: 'Are you sure?' }, class: "pull-right" %>
-						<% elsif @notable.class.to_s == "Group" %>
-							<%= link_to 'x', group_note_path(@notable, note) , method: :delete, data: { confirm: 'Are you sure?' }, class: "pull-right" %>
-						<% elsif @notable.class.to_s == "Scene" %>
-							<%= link_to 'x', scene_note_path(@notable, note) , method: :delete, data: { confirm: 'Are you sure?' }, class: "pull-right" %>
-						<% end %>
+						<%= link_to 'x', [@notable, note] , method: :delete, data: { confirm: 'Are you sure?' }, class: "pull-right" %>
 						<%= note.title %>
 					</a>
 				</h4>

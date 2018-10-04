@@ -1,0 +1,41 @@
+<%= form_with(model: message, local: true) do |form| %>
+  <% if message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
+
+      <ul>
+      <% message.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <strong>Subject:</strong>
+    <%= form.text_field :title, id: :message_title, placeholder: "What's it about?", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <strong>Message:</strong>
+    <%= form.text_area :content, id: :message_content, placeholder: "What do you want to say?", class: "form-control" %>
+  </div>
+
+  <% if user_signed_in? && current_user.role != "demo" %>
+    <div class="form-group">
+      <%= form.hidden_field :user_id, id: :message_user_id, value: current_user.id %>
+    </div>
+    <div class="form-group">
+      <%= form.hidden_field :email, id: :message_email, value: current_user.email %>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <strong>Contact Email:</strong>
+      <%= form.text_field :email, id: :message_email, placeholder: "So we can get back to you!", class: "form-control" %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

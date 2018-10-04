@@ -6,4 +6,5 @@ class User < ApplicationRecord
   has_many :projects
   has_many :groups, through: :projects
   has_many :characters, through: :projects
+  has_many :messages
 end

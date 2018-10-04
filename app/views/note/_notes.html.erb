@@ -3,10 +3,11 @@
 		<div class="panel panel-default">
 			<div class="panel-heading" role="tab" id="heading<%= note.id %>">
 				<h4 class="panel-title">
-					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= note.id %>" aria-expanded="false" aria-controls="collapse<%= note.id %>">
-						<%= link_to 'x', [@notable, note] , method: :delete, data: { confirm: 'Are you sure?' }, class: "pull-right" %>
+					<%= link_to 'x', [@notable, note] , method: :delete, data: { confirm: 'Are you sure?' }, class: "pull-right" %>
+					<a class="collapsed btn-block" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= note.id %>" aria-expanded="false" aria-controls="collapse<%= note.id %>">
 						<%= note.title %>
 					</a>
+					
 				</h4>
 			</div> <!-- end heading -->
 			<div id="collapse<%= note.id%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= note.id %>">

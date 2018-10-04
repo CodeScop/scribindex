@@ -39,7 +39,8 @@ body {
     }
 }
 
-.navbar-inverse .navbar-nav > li > a {
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand {
+    color: $gray-lighter;
     &.btn-default {
     color: $brand-primary;
     font-weight: bold;

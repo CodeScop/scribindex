@@ -15,7 +15,7 @@
       <% if current_project %>
         <%= link_to current_project.title, current_project, class: "navbar-brand" %>
       <% elsif user_signed_in? %>
-        <%= link_to "All Projects", root_path, class: "navbar-brand" %>
+        <%= link_to "Project Portal", root_path, class: "navbar-brand" %>
       <% end %>
     </div>
 
@@ -54,19 +54,20 @@
           </li>
         <!-- otherwise -->
         <% elsif user_signed_in? %>
-          <li ><%= link_to "All Characters", characters_path %></li>
-          <li><%= link_to "All Groups", groups_path %></li>
+          <li><%= link_to 'Create New Project', new_project_path, class: "btn btn-success" %></li>
         <% end %>
       </ul>
 
       <!-- On the right, user stuff -->
       <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to 'Contact Us', new_message_path, class: "btn btn-success" %></li>
         <% if current_project %>
-          <li><%= link_to 'Leave Current Project', root_path, class: "btn btn-block btn-default" %></li>
-        <% elsif user_signed_in? %>
-          <li><%= link_to 'Create New Project', new_project_path, class: "btn btn-success" %></li>
+          <li><%= link_to 'Switch Projects', root_path, class: "btn btn-block btn-default" %></li> 
         <% end %>
         <% if user_signed_in? %>
+          <% if can? :manage, Message %>
+            <li><%= link_to "Messages", messages_path %></li>
+          <% end %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.username%> <span class="caret"></span></a>
             <ul class="dropdown-menu">

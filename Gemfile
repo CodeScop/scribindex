@@ -39,7 +39,7 @@ gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'carrierwave'
 gem 'mini_magick'
 
-gem 'sanitize', '~> 4.6.3'
+gem 'sanitize', '>= 5.2.1'
 
 gem 'jquery-ui-rails'
 gem 'rails_sortable'
